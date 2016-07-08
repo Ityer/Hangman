@@ -1,12 +1,19 @@
+import random
 def WordValidation():
-	done=False
-	while done == False:
-		word = input("Word: ")
-		if (len(word) < 10) and (len(word)>2):
-			done = True
-			return word.lower()
-		else:
-			print("Invalid: Please enter a word that is 3-10 letters long")
+	#done=False
+	#while done == False:
+	#	word = input("Word: ")
+	#	if (len(word) < 10) and (len(word)>2):
+	#		done = True
+	#		return word.lower()
+	#	else:
+	#	print("Invalid: Please enter a word that is 3-10 letters long")
+	word_file = "words.txt"
+	WORDS = open(word_file).read().splitlines()
+	word = WORDS[random.randint(0,(len(WORDS))-1)]
+	return word.lower()
+	
+	
 
 			
 def LetterValidation(GuessedLetters):
@@ -29,8 +36,7 @@ def SetWord():
 	LetterList = []
 	for i in word:
 		LetterList.append(i)
-	print(LetterList)
-	return LetterList
+	return (LetterList, word)
 
 	
 def MakeDisplayWord(LetterList):
@@ -45,15 +51,14 @@ def MakeDisplayWord(LetterList):
 			
 
 def Setup():
-	LetterList = SetWord()
+	LetterList, word = SetWord()
 	DisplayWord = MakeDisplayWord(LetterList)
-	return (LetterList, DisplayWord)
+	return (LetterList, DisplayWord, word)
 	
 def Guessing(LetterList,DisplayWord,GuessedLetters,Incorrect):
 	Letter,GuessedLetters = LetterValidation(GuessedLetters)
 	if Letter in LetterList:
 		for i in range(0,(len(DisplayWord))):
-			print("i=%s"%i)
 			if LetterList[i] == Letter:
 				DisplayWord[i]=Letter
 	else:
@@ -63,7 +68,7 @@ def Guessing(LetterList,DisplayWord,GuessedLetters,Incorrect):
 	print(DisplayWord)
 	return (LetterList, DisplayWord,GuessedLetters, Incorrect)
 
-LetterList, DisplayWord = Setup()
+LetterList, DisplayWord, word = Setup()
 done=False
 turns=0
 Incorrect=10
@@ -76,6 +81,7 @@ while done == False:
 	elif Incorrect <= 0:
 		print("Hangman!")
 		print("Player ran out of guesses")
+		print("The word was: '%s'"%word)
 		done=True
 	else:
 		turns+=1
