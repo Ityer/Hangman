@@ -46,7 +46,7 @@ def MakeDisplayWord(LetterList):
 				DisplayWord.append(" ")
 			else:
 				DisplayWord.append("_")
-		print(DisplayWord)
+		print(*DisplayWord, sep='')
 		return DisplayWord
 			
 
@@ -65,7 +65,7 @@ def Guessing(LetterList,DisplayWord,GuessedLetters,Incorrect):
 		Incorrect-=1
 		print("This letter was not in the word")
 		print("You can only get %s incorrect guesses"%Incorrect)
-	print(DisplayWord)
+	print(*DisplayWord, sep='')
 	return (LetterList, DisplayWord,GuessedLetters, Incorrect)
 
 LetterList, DisplayWord, word = Setup()
