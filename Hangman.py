@@ -15,7 +15,7 @@ def LetterValidation():
 		Letter = input("Letter: ")
 		if (len(Letter) == 1):
 			done = True
-			return Letter
+			return Letter.lower()
 		else:
 			print("Invalid: Please only enter a single letter")
 			
@@ -45,12 +45,27 @@ def Setup():
 	
 def Guessing(LetterList,DisplayWord):
 	Letter = LetterValidation()
+	print(0)
 	if Letter in LetterList:
-		for i in range(0,(len(DisplayWord)-1)):
+		print(1)
+		for i in range(0,(len(DisplayWord))):
+			print(2)
+			print("i=%s"%i)
 			if LetterList[i] == Letter:
+				print(3)
 				DisplayWord[i]=Letter
 	print(DisplayWord)
+	return (LetterList, DisplayWord)
 
 LetterList, DisplayWord = Setup()
-Guessing(LetterList,DisplayWord)			
+done=False
+turns=0
+while done == False:
+	
+	if DisplayWord == LetterList:
+		print("Guesser Wins! It took %s guesses"%turns)
+		done=True
+	else:
+		turns+=1
+		LetterList, DisplayWord = Guessing(LetterList,DisplayWord)			
 	
