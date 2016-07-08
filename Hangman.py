@@ -46,26 +46,35 @@ def Setup():
 	DisplayWord = MakeDisplayWord(LetterList)
 	return (LetterList, DisplayWord)
 	
-def Guessing(LetterList,DisplayWord,GuessedLetters):
+def Guessing(LetterList,DisplayWord,GuessedLetters,Incorrect):
 	Letter,GuessedLetters = LetterValidation(GuessedLetters)
 	if Letter in LetterList:
 		for i in range(0,(len(DisplayWord))):
 			print("i=%s"%i)
 			if LetterList[i] == Letter:
 				DisplayWord[i]=Letter
+	else:
+		Incorrect-=1
+		print("This letter was not in the word")
+		print("You can only get %s incorrect guesses"%Incorrect)
 	print(DisplayWord)
-	return (LetterList, DisplayWord,GuessedLetters)
+	return (LetterList, DisplayWord,GuessedLetters, Incorrect)
 
 LetterList, DisplayWord = Setup()
 done=False
 turns=0
+Incorrect=10
 GuessedLetters=[]
 while done == False:
 	
 	if DisplayWord == LetterList:
 		print("Guesser Wins! It took %s guesses"%turns)
 		done=True
+	elif Incorrect <= 0:
+		print("Hangman!")
+		print("Player ran out of guesses")
+		done=True
 	else:
 		turns+=1
-		LetterList, DisplayWord, GuessedLetters = Guessing(LetterList,DisplayWord,GuessedLetters)			
+		LetterList, DisplayWord, GuessedLetters, Incorrect = Guessing(LetterList,DisplayWord,GuessedLetters,Incorrect)			
 	
