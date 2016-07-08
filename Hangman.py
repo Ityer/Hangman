@@ -9,15 +9,19 @@ def WordValidation():
 			print("Invalid: Please enter a word that is 3-10 letters long")
 
 			
-def LetterValidation():
+def LetterValidation(GuessedLetters):
 	done=False
 	while done == False:
 		Letter = input("Letter: ")
-		if (len(Letter) == 1):
-			done = True
-			return Letter.lower()
+		if Letter in GuessedLetters:
+			print("You have allready tried this Letter")
 		else:
-			print("Invalid: Please only enter a single letter")
+			if (len(Letter) == 1):
+				done = True
+				GuessedLetters.append(Letter)
+				return (Letter.lower(), GuessedLetters)
+			else:
+				print("Invalid: Please only enter a single letter")
 			
 			
 def SetWord():
@@ -38,28 +42,24 @@ def MakeDisplayWord(LetterList):
 			
 
 def Setup():
-	GuessedLetters=[]
 	LetterList = SetWord()
 	DisplayWord = MakeDisplayWord(LetterList)
 	return (LetterList, DisplayWord)
 	
-def Guessing(LetterList,DisplayWord):
-	Letter = LetterValidation()
-	print(0)
+def Guessing(LetterList,DisplayWord,GuessedLetters):
+	Letter,GuessedLetters = LetterValidation(GuessedLetters)
 	if Letter in LetterList:
-		print(1)
 		for i in range(0,(len(DisplayWord))):
-			print(2)
 			print("i=%s"%i)
 			if LetterList[i] == Letter:
-				print(3)
 				DisplayWord[i]=Letter
 	print(DisplayWord)
-	return (LetterList, DisplayWord)
+	return (LetterList, DisplayWord,GuessedLetters)
 
 LetterList, DisplayWord = Setup()
 done=False
 turns=0
+GuessedLetters=[]
 while done == False:
 	
 	if DisplayWord == LetterList:
@@ -67,5 +67,5 @@ while done == False:
 		done=True
 	else:
 		turns+=1
-		LetterList, DisplayWord = Guessing(LetterList,DisplayWord)			
+		LetterList, DisplayWord, GuessedLetters = Guessing(LetterList,DisplayWord,GuessedLetters)			
 	
