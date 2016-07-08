@@ -36,7 +36,10 @@ def SetWord():
 def MakeDisplayWord(LetterList):
 		DisplayWord=[]
 		for i in LetterList:
-			DisplayWord.append("_")
+			if i == " ":
+				DisplayWord.append(" ")
+			else:
+				DisplayWord.append("_")
 		print(DisplayWord)
 		return DisplayWord
 			
